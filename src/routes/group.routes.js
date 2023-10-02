@@ -10,6 +10,7 @@ import {
   addFollows,
   removeFollows,
 } from '../controller/group'
+const { body , validationResult } = require('express-validator');
 
 const groupRouter = express.Router()
 

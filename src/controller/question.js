@@ -7,7 +7,7 @@ import { addQuestionAnswers, updateAnswers, deleteQuestionAnswers, getUserQuesti
 // Add a question or answer a question
 export async function addQuestionAnswer(req, res) {
   let data = req.body;
-  console.log(data.Answers)
+  console.log(data)
   try{
       await addQuestionAnswers(data);
       res.status(200).send("Sequence commenced successfully!");
@@ -22,6 +22,7 @@ export async function addQuestionAnswer(req, res) {
 //update an Answer
 export async function updateAnswer(req, res) {
   let data = req.body;
+  console.log(data)
   try {
       const updatedQuestion = await updateAnswers(data);
   

@@ -9,14 +9,28 @@ import {
     deleteQuestion,
     searchQuestion
     } from '../controller/question'
+const { body , validationResult } = require('express-validator');
 
 const questionRouter = express.Router()
 
 // Add a question or answer
-questionRouter.post("/addQuestionAnswer", addQuestionAnswer)
-
+questionRouter.post(
+    '/addQuestionAnswer',
+    [
+      // Sanitize the entire request body
+      body('Answers.answer').escape(),
+      body('Question').escape(),
+    ],
+    addQuestionAnswer
+  );
 //Updating Answers
-questionRouter.put('/updateAnswer', updateAnswer)
+questionRouter.put(
+    '/updateAnswer',
+    [
+        // Sanitize the entire request body
+        body('Answers.answer').escape(),
+    ],
+    updateAnswer)
 
 //Getting Questions
 questionRouter.get('/getAllQuestions', getAllQuestions)
