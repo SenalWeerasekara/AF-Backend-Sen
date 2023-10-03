@@ -1,7 +1,7 @@
 require('dotenv').config()
 import express from 'express'
 import compression from 'compression'
-import helmet from 'helmet'
+// import helmet from 'helmet'
 import cors from 'cors'
 import connectDB from './database'
 import router from './routes/index.routes'
@@ -9,9 +9,32 @@ import { isCelebrateError } from 'celebrate'
 import { makeResponse } from './utils/response'
 import logger from './utils/logger'
 
+const helmet = require('helmet');
+
 const app = express()
 
-app.use(helmet())
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'","http://localhost:3002"],
+        scriptSrc: [
+          "'self'", 
+          "'unsafe-inline", 
+          "http://localhost:3000/", 
+          "https://cdnjs.cloudflare.com", 
+          "https://ajax.googleapis.com"],
+        styleSrc: [
+          "'self'", 
+          "'unsafe-inline", 
+          "https://fonts.googleapis.com"],
+        imgSrc:["'self'"],
+        fontSrc:["'self"],
+        upgradeInsecureRequests: [],
+      },
+    },
+  })
+);
 
 app.use(compression())
 
@@ -40,6 +63,7 @@ app.use((err, req, res, next) => {
       message: "Just patching things up. This'll be over soon!",
     })
 })
+
 
 connectDB()
 
